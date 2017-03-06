@@ -1,3 +1,4 @@
+from abc import ABCMeta, abstractmethod
 import urllib
 import urllib.error
 import urllib.request
@@ -7,11 +8,21 @@ from rasp.errors import EngineError
 
 
 class Engine(object):
+    __metaclass__ = ABCMeta
+
     def get_page_source(self, url):
         raise EngineError("get_page_source not implemented")
 
     def cleanup(self):
         return
+
+    @abstractmethod
+    def get_page_source(self):
+        """Override this"""
+        pass
+
+    def as_function(self):
+        return self.get_page_source
 
     def clone(self):
         raise EngineError("clone not implemented")
